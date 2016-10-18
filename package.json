@@ -40,7 +40,7 @@
     "server:prod": "http-server dist --cors",
     "webpack": "cross-env ./node_modules/.bin/webpack",
     "webpack-dev-server": "cross-env ./node_modules/.bin/webpack-dev-server",
-    "heroku-postbuild":"npm run build:prod"
+    "heroku-postbuild":"npm run start"
   },
   "repository": {
     "type": "git",
@@ -90,9 +90,7 @@
     "bootstrap": "^3.3.7",
     "font-awesome": "^4.6.3",
     "isomorphic-fetch": "^2.2.1",
-    "jquery": "^3.1.0"
-  },
-  "devDependencies": {
+    "jquery": "^3.1.0",
     "@easy-webpack/config-aurelia": "^2.0.1",
     "@easy-webpack/config-babel": "^2.0.2",
     "@easy-webpack/config-common-chunks-simple": "^2.0.1",
