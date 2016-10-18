@@ -39,8 +39,8 @@
     "server:dev:hmr": "npm run server:dev -- --hot",
     "server:prod": "http-server dist --cors",
     "webpack": "cross-env ./node_modules/.bin/webpack",
-    "webpack-dev-server": "cross-env ./node_modules/.bin/webpack-dev-server",
-    "postinstall":"npm run build:prod"
+    "webpack-dev-server": "cross-env ./node_modules/.bin/webpack-dev-server"
+    // "postinstall":"npm run build:prod"
   },
   "repository": {
     "type": "git",
