@@ -51,7 +51,8 @@ const coreBundles = {
     'aurelia-templating',
     'aurelia-templating-binding',
     'aurelia-templating-router',
-    'aurelia-templating-resources'
+    'aurelia-templating-resources',
+    'aurelia-authentication'
   ]
 }
 
@@ -62,7 +63,25 @@ const baseConfig = {
     'aurelia': coreBundles.aurelia.filter(pkg => coreBundles.bootstrap.indexOf(pkg) === -1)
   },
   output: {
-    path: outDir,
+    path: outDir
+  },
+  module: {
+    loaders: [{
+      test: /\.jsx?$/,
+      exclude: /node_modules/,
+      loader: 'babel',
+      query: {
+        presets: ['es2015', 'react']
+      }
+    },
+    {
+      test: /\.jpe?g$|\.gif$|\.png$|\.svg$|\.woff$|\.ttf$|\.wav$|\.mp3$/,
+      loader: "file"
+    }]
+  },
+  resolve: {
+    modulesDirectories: ["build", "node_modules"],
+    extensions: ['', '.js', '.jsx'],
   }
 }
 
@@ -73,10 +92,10 @@ switch (ENV) {
       baseConfig,
 
       require('@easy-webpack/config-env-production')
-        ({compress: true}),
-        
+        ({ compress: true }),
+
       require('@easy-webpack/config-aurelia')
-        ({root: rootDir, src: srcDir, title: title, baseUrl: baseUrl}),
+        ({ root: rootDir, src: srcDir, title: title, baseUrl: baseUrl }),
 
       require('@easy-webpack/config-babel')(),
       require('@easy-webpack/config-html')(),
@@ -89,28 +108,28 @@ switch (ENV) {
       require('@easy-webpack/config-global-jquery')(),
       require('@easy-webpack/config-global-regenerator')(),
       require('@easy-webpack/config-generate-index-html')
-        ({minify: true}),
+        ({ minify: true }),
 
       require('@easy-webpack/config-copy-files')
-        ({patterns: [{ from: 'favicon.ico', to: 'favicon.ico' }]}),
+        ({ patterns: [{ from: 'favicon.ico', to: 'favicon.ico' }] }),
 
       require('@easy-webpack/config-common-chunks-simple')
-        ({appChunkName: 'app', firstChunk: 'aurelia-bootstrap'}),
+        ({ appChunkName: 'app', firstChunk: 'aurelia-bootstrap' }),
 
       require('@easy-webpack/config-uglify')
-        ({debug: false})
+        ({ debug: false })
     );
     break;
-  
+
   case 'test':
     config = generateConfig(
       baseConfig,
 
       require('@easy-webpack/config-env-development')
-        ({devtool: 'inline-source-map'}),
+        ({ devtool: 'inline-source-map' }),
 
       require('@easy-webpack/config-aurelia')
-        ({root: rootDir, src: srcDir, title: title, baseUrl: baseUrl}),
+        ({ root: rootDir, src: srcDir, title: title, baseUrl: baseUrl }),
 
       require('@easy-webpack/config-babel')(),
       require('@easy-webpack/config-html')(),
@@ -127,7 +146,7 @@ switch (ENV) {
       require('@easy-webpack/config-test-coverage-istanbul')()
     );
     break;
-  
+
   default:
   case 'development':
     process.env.NODE_ENV = 'development';
@@ -137,7 +156,7 @@ switch (ENV) {
       require('@easy-webpack/config-env-development')(),
 
       require('@easy-webpack/config-aurelia')
-        ({root: rootDir, src: srcDir, title: title, baseUrl: baseUrl}),
+        ({ root: rootDir, src: srcDir, title: title, baseUrl: baseUrl }),
 
       require('@easy-webpack/config-babel')(),
       require('@easy-webpack/config-html')(),
@@ -150,13 +169,13 @@ switch (ENV) {
       require('@easy-webpack/config-global-jquery')(),
       require('@easy-webpack/config-global-regenerator')(),
       require('@easy-webpack/config-generate-index-html')
-        ({minify: false}),
+        ({ minify: false }),
 
       require('@easy-webpack/config-copy-files')
-        ({patterns: [{ from: 'favicon.ico', to: 'favicon.ico' }]}),
+        ({ patterns: [{ from: 'favicon.ico', to: 'favicon.ico' }] }),
 
       require('@easy-webpack/config-common-chunks-simple')
-        ({appChunkName: 'app', firstChunk: 'aurelia-bootstrap'})
+        ({ appChunkName: 'app', firstChunk: 'aurelia-bootstrap' })
     );
     break;
 }
